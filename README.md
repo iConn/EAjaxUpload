@@ -1,4 +1,4 @@
-EAjaxUpload - jQuery file upload extension for Yii, allows your users to easily upload files to your server
+EAjaxUpload - Данное расширение для Yii Framework позволяет загружать файлы без использования Flash
 =======
 
 ## Установка
@@ -21,7 +21,7 @@ protected/
 
 ## ССылки
 
-* [Demo](https://github.com/kosenka/EAjaxUpload)
+* [Demo](http://kosenka.ru/#tab1)
 * [Extension project page](https://github.com/kosenka/EAjaxUpload)
 * [Russian community discussion thread](http://yiiframework.ru/forum/viewtopic.php?f=9&t=2470)
 
