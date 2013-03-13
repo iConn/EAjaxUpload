@@ -63,26 +63,6 @@ class qqFileUploader {
     private $sizeLimit = 10485760;
     private $file;
 
-    //http://yiiframework.ru/forum/memberlist.php?mode=viewprofile&u=3311
-    function translitIt($str) {
-        $tr = array(
-            "А" => "A", "Б" => "B", "В" => "V", "Г" => "G",
-            "Д" => "D", "Е" => "E", "Ж" => "J", "З" => "Z", "И" => "I",
-            "Й" => "Y", "К" => "K", "Л" => "L", "М" => "M", "Н" => "N",
-            "О" => "O", "П" => "P", "Р" => "R", "С" => "S", "Т" => "T",
-            "У" => "U", "Ф" => "F", "Х" => "H", "Ц" => "TS", "Ч" => "CH",
-            "Ш" => "SH", "Щ" => "SCH", "Ъ" => "", "Ы" => "YI", "Ь" => "",
-            "Э" => "E", "Ю" => "YU", "Я" => "YA", "а" => "a", "б" => "b",
-            "в" => "v", "г" => "g", "д" => "d", "е" => "e", "ж" => "j",
-            "з" => "z", "и" => "i", "й" => "y", "к" => "k", "л" => "l",
-            "м" => "m", "н" => "n", "о" => "o", "п" => "p", "р" => "r",
-            "с" => "s", "т" => "t", "у" => "u", "ф" => "f", "х" => "h",
-            "ц" => "ts", "ч" => "ch", "ш" => "sh", "щ" => "sch", "ъ" => "y",
-            "ы" => "yi", "ь" => "", "э" => "e", "ю" => "yu", "я" => "ya"
-        );
-        return strtr($str, $tr);
-    }
-
     function __construct(array $allowedExtensions = array(), $sizeLimit = 10485760){
         $allowedExtensions = array_map("strtolower", $allowedExtensions);
 
@@ -143,8 +123,10 @@ class qqFileUploader {
             return array('error' => 'File is too large');
         }
 
-        $pathinfo = pathinfo($this->file->getName());
-        $filename = $this->translitIt($pathinfo['filename']);//http://yiiframework.ru/forum/memberlist.php?mode=viewprofile&u=3311
+        $pathinfo = pathinfo($this->file->getName());        
+        $filename=preg_replace("/[^\w\x7F-\xFF\s]/i", "", $pathinfo['filename']);
+        if(!isset($filename) or empty($filename)) $filename=uniqid();
+        
         //$filename = $pathinfo['filename'];
         
         //$filename = md5(uniqid());
