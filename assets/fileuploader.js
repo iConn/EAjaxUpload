@@ -1197,11 +1197,11 @@ qq.extend(qq.UploadHandlerXhr.prototype, {
         params['qqfile'] = name;
         var queryString = qq.obj2url(params, this._options.action);
 
+        var formData = new FormData();
+        formData.append('qqfile', file);
+        if(params['YII_CSRF_TOKEN']) formData.append('YII_CSRF_TOKEN', params['YII_CSRF_TOKEN']);
         xhr.open("POST", queryString, true);
-        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-        xhr.setRequestHeader("X-File-Name", encodeURIComponent(name));
-        xhr.setRequestHeader("Content-Type", "application/octet-stream");
-        xhr.send(file);
+        xhr.send(formData);
     },
     _onComplete: function(id, xhr){
         // the request was aborted/cancelled
